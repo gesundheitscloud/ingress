@@ -386,6 +386,10 @@ func buildProxyPass(host string, b interface{}, loc interface{}, dynamicConfigur
 	    %v`, path, location.Path, xForwardedPrefix, proto, upstreamName, abu)
 		}
 
+		if len(path) > 1 && strings.HasSuffix(path, slash)  {
+			path = fmt.Sprintf("%s?", path)
+		}
+
 		return fmt.Sprintf(`
 	    rewrite %s(.*) %s/$1 break;
 	    %vproxy_pass %s://%s;

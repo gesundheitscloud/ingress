@@ -150,7 +150,7 @@ var (
 			"/not-root",
 			"~* ^/end-with-slash/(?<baseuri>.*)",
 			`
-	    rewrite /end-with-slash/(.*) /not-root/$1 break;
+	    rewrite /end-with-slash/?(.*) /not-root/$1 break;
 	    proxy_pass http://upstream-name;
 	    `,
 			false,
@@ -164,7 +164,7 @@ var (
 			"/not-root",
 			`~* ^/something-complex\/?(?<baseuri>.*)`,
 			`
-	    rewrite /something-complex/(.*) /not-root/$1 break;
+	    rewrite /something-complex/?(.*) /not-root/$1 break;
 	    proxy_pass http://upstream-name;
 	    `,
 			false,
@@ -209,7 +209,7 @@ var (
 			"/not-root",
 			`~* ^/end-with-slash/(?<baseuri>.*)`,
 			`
-	    rewrite /end-with-slash/(.*) /not-root/$1 break;
+	    rewrite /end-with-slash/?(.*) /not-root/$1 break;
 	    proxy_pass http://upstream-name;
 	    subs_filter '(<(?:H|h)(?:E|e)(?:A|a)(?:D|d)(?:[^">]|"[^"]*")*>)' '$1<base href="$scheme://$http_host/end-with-slash/$baseuri">' ro;
 	    `,
@@ -224,7 +224,7 @@ var (
 			"/not-root",
 			`~* ^/something-complex\/?(?<baseuri>.*)`,
 			`
-	    rewrite /something-complex/(.*) /not-root/$1 break;
+	    rewrite /something-complex/?(.*) /not-root/$1 break;
 	    proxy_pass http://upstream-name;
 	    subs_filter '(<(?:H|h)(?:E|e)(?:A|a)(?:D|d)(?:[^">]|"[^"]*")*>)' '$1<base href="$scheme://$http_host/something-complex/$baseuri">' ro;
 	    `,
@@ -283,7 +283,7 @@ var (
 			"/something",
 			`~* ^/there\/?(?<baseuri>.*)`,
 			`
-	    rewrite /there/(.*) /something/$1 break;
+	    rewrite /there/?(.*) /something/$1 break;
 	    proxy_set_header X-Forwarded-Prefix "/there/";
 	    proxy_pass http://sticky-upstream-name;
 	    `,
